@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"web-server/internal/handler"
 )
 
 func main() {
@@ -17,9 +18,9 @@ func main() {
 	// construct the server url
 	serverURL := fmt.Sprintf("http://%s", address)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Web server running")
-	})
+	http.HandleFunc("/", handler.RootHandler)
+	http.HandleFunc("/user", handler.UserHandler)
+	http.HandleFunc("/books", handler.BookHandler)
 
 	fmt.Println("Server is runing on:", serverURL)
 	if err := http.Serve(listener, nil); err != nil {
