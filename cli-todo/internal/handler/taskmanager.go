@@ -1,6 +1,9 @@
 package handler
 
-func AddTask(description string) error {
+import "time"
+
+func (l *List) AddTask(description string) error {
+
 }
 
 func ListTasks() ([]Task, error) {
