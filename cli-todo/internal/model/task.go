@@ -3,10 +3,12 @@ package model
 import (
 	"errors"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Task struct {
-	ID          int    `json:"id"`
+	ID          uuid.UUID
 	Description string `json:"description"`
 	Completed   bool   `json:"completed"`
 	CreatedAt   time.Time
