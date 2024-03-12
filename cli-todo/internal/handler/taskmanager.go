@@ -2,34 +2,33 @@ package handler
 
 import (
 	"cli-todo/internal/model"
-	"cli-todo/storage"
+	"cli-todo/internal/storage"
 	"errors"
 	"time"
 
 	"github.com/google/uuid"
 )
 
-func (l *model.List) AddTask(description string) error {
-	id, err := uuid.NewUUID()
-	if err != nil {
-		return err
-	}
+type TaskList struct {
+	Tasks model.List
+}
 
+func (tl *TaskList) AddTask(description string) error {
 	newTask := model.Task{
-		ID:          id,
+		ID:          uuid.New(),
 		Description: description,
 		Completed:   false,
 		CreatedAt:   time.Now(),
 	}
 
-	if err := model; err != nil {
-		return err
+	if err := newTask.Validate(); err != nil {
+		return errors.New("Failed to sake task: %v" + err.Error())
 	}
 
-	*l = append(*l, newTask)
+	tl.Tasks = append(tl.Tasks, newTask)
 
-	if err := storage.SaveTasks(*l); err != nil {
-		return errors.New("Failed to save task: " + err.Error())
+	if err := storage.SaveTasks(tl); err != nil {
+		return errors.New("Failed to save task: %v" + err.Error())
 	}
 	return nil
 }

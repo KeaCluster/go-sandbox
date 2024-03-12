@@ -16,7 +16,7 @@ type Task struct {
 
 type List []Task
 
-func (t *Task) validate() error {
+func (t *Task) Validate() error {
 	if t.Description == "" {
 		return errors.New("Description can't be empty")
 	}
