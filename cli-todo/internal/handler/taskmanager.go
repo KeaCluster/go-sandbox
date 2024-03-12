@@ -42,7 +42,9 @@ func ListTasks() ([]model.Task, error) {
 }
 
 func CompleteTask(id int) error {
+	return nil
 }
 
 func DeleteTask(id int) error {
+	return nil
 }

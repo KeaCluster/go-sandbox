@@ -8,10 +8,10 @@ import (
 )
 
 type Task struct {
-	ID          uuid.UUID
-	Description string `json:"description"`
-	Completed   bool   `json:"completed"`
-	CreatedAt   time.Time
+	ID          uuid.UUID `json:"id"`
+	Description string    `json:"description"`
+	Completed   bool      `json:"completed"`
+	CreatedAt   time.Time `json:"createdAt"`
 }
 
 type List []Task
