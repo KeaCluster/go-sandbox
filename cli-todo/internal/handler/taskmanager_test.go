@@ -29,14 +29,19 @@ func TextAddTask(t *testing.T) {
 
 func TestListTasks(t *testing.T) {
 	taskList := TaskList{}
-	taskList.AddTask("First task")
+	err := taskList.AddTask("First task")
+	if err != nil {
+		t.Fatalf("Setup failed: returned error %v", err)
+	}
 
 	tasks, err := ListTasks()
 	if err != nil {
 		t.Fatalf("ListTasks failed: %v", err)
 	}
 
-	if len(tasks) != 0 {
+	if len(tasks) != 1 {
 		t.Errorf("Expected at least 1 task, got %d", len(tasks))
 	}
+
+	os.Remove("tasks.json")
 }
