@@ -17,3 +17,19 @@ func SaveTasks(tasks model.List) error {
 	err = os.WriteFile(tasksPath, data, 0644)
 	return err
 }
+
+func LoadTasks() (model.List, error) {
+	var tasks model.List
+	data, err := os.ReadFile(tasksPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return tasks, nil
+		}
+		return nil, err
+	}
+	err = json.Unmarshal(data, &tasks)
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
+}

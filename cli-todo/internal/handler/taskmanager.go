@@ -33,7 +33,12 @@ func (tl *TaskList) AddTask(description string) error {
 	return nil
 }
 
-func ListTasks() ([]Task, error) {
+func ListTasks() ([]model.Task, error) {
+	tasks, err := storage.LoadTasks()
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
 }
 
 func CompleteTask(id int) error {
