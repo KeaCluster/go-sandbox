@@ -56,6 +56,14 @@ func (tl *TaskList) CompleteTask(id uuid.UUID) error {
 		}
 	}
 
+	if !found {
+		return errors.New("Task not found")
+	}
+
+	err = storage.SaveTasks(tasks)
+	if err != nil {
+		return errors.New("Failed to load tasks: %v" + err.Error())
+	}
 	return nil
 }
 
