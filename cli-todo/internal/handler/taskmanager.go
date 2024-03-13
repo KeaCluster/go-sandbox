@@ -41,12 +41,21 @@ func ListTasks() ([]model.Task, error) {
 	return tasks, nil
 }
 
-func CompleteTask(id int) error {
-
-	id, err := storage.DoneTask(id)
+func (tl *TaskList) CompleteTask(id uuid.UUID) error {
+	tasks, err := storage.LoadTasks()
 	if err != nil {
-		return errors.New("Failed to complete task: %v" + err.Error())
+		return errors.New("Failed to load tasks: %v" + err.Error())
 	}
+
+	found := false
+	for i, task := range tasks {
+		if task.ID == id {
+			tasks[i].Completed = true
+			found = true
+			break
+		}
+	}
+
 	return nil
 }
 
