@@ -22,10 +22,18 @@ I dunno the command yet
 ### Functions
 
 - `AddTask()`
-  - Adds a task
+  - Adds a task into a `tasks.json` file
 - `ListTasks()`
-  - Returns a list of tasks
+  - Returns a list of tasks if they exist
 - `CompleteTask()`
-  - Returns the completed task
+  - Marks the task as completed
+  - [] Setup to return the completed task
 - `DeleteTask()`
-  - Deletes the task and returns a message
+  - Deletes the task from the file
+  - [] Setup to return a message of the output
+
+### Todo
+
+- [] Refactor functions
+- [] Clean code reusable
+- [] Functional question mark
