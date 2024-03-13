@@ -42,6 +42,11 @@ func ListTasks() ([]model.Task, error) {
 }
 
 func CompleteTask(id int) error {
+
+	id, err := storage.DoneTask(id)
+	if err != nil {
+		return errors.New("Failed to complete task: %v" + err.Error())
+	}
 	return nil
 }
 

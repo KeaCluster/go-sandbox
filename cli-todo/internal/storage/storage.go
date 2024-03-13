@@ -33,3 +33,6 @@ func LoadTasks() (model.List, error) {
 	}
 	return tasks, nil
 }
+
+func DoneTask(id int) {
+}
