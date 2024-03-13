@@ -67,6 +67,27 @@ func (tl *TaskList) CompleteTask(id uuid.UUID) error {
 	return nil
 }
 
-func DeleteTask(id int) error {
+func (tl *TaskList) DeleteTask(id uuid.UUID) error {
+	tasks, err := storage.LoadTasks()
+	if err != nil {
+		return errors.New("Failed to load tasks: %v" + err.Error())
+	}
+
+	found := false
+	for i, task := range tasks {
+		if task.ID == id {
+			tasks = append(tasks[:i], tasks[i+1:]...)
+			found = true
+			break
+		}
+	}
+	if !found {
+		return errors.New("Task not found")
+	}
+
+	err = storage.SaveTasks(tasks)
+	if err != nil {
+		return errors.New("Failed to load tasks: %v" + err.Error())
+	}
 	return nil
 }
