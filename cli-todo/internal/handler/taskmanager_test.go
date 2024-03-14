@@ -10,7 +10,8 @@ import (
 	"github.com/google/uuid"
 )
 
-func TextAddTask(t *testing.T) {
+func TestAddTask(t *testing.T) {
+	defer os.Remove("tasks.json")
 	taskList := TaskList{Tasks: model.List{}}
 	taskDescription := "Task to test"
 
@@ -32,6 +33,7 @@ func TextAddTask(t *testing.T) {
 }
 
 func TestListTasks(t *testing.T) {
+	defer os.Remove("tasks.json")
 	taskList := TaskList{}
 	err := taskList.AddTask("First task")
 	if err != nil {
@@ -51,6 +53,7 @@ func TestListTasks(t *testing.T) {
 }
 
 func (tl *TaskList) TestCompleteTask(id uuid.UUID) error {
+	defer os.Remove("tasks.json")
 	tasks, err := storage.LoadTasks()
 	if err != nil {
 		return nil
