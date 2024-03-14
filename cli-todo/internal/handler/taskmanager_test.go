@@ -6,8 +6,6 @@ import (
 	"errors"
 	"os"
 	"testing"
-
-	"github.com/google/uuid"
 )
 
 func TestAddTask(t *testing.T) {
@@ -52,24 +50,33 @@ func TestListTasks(t *testing.T) {
 	os.Remove("tasks.json")
 }
 
-func (tl *TaskList) TestCompleteTask(id uuid.UUID) error {
+func TestCompleteTask(t *testing.T) error {
 	defer os.Remove("tasks.json")
-	tasks, err := storage.LoadTasks()
-	if err != nil {
-		return nil
-	}
 
 	tasklist := TaskList{Tasks: model.List{}}
 	taskDescription := "testing task"
 
 	tasklist.AddTask(taskDescription)
 
+	lastIndex := len(tasklist.Tasks) - 1
+
+	newTaskId := tasklist.Tasks[lastIndex].ID
+	tasklist.CompleteTask(newTaskId)
+
+	// reload
+	tasks, err := storage.LoadTasks()
+	if err != nil {
+		t.Errorf("Can't load tasks: %v", err)
+	}
+
 	found := false
-	for i, task := range tasks {
-		if task.ID == id {
-			tasks = append(tasks[:i], tasks[i+1:]...)
+	// _ is used when not necessary in loop
+	for _, task := range tasks {
+		if task.ID == newTaskId {
 			found = true
-			task.Completed = true
+			if !task.Completed {
+				t.Errorf("Task %v was not marked as completed", task.ID)
+			}
 			break
 		}
 	}
