@@ -2,8 +2,12 @@ package handler
 
 import (
 	"cli-todo/internal/model"
+	"cli-todo/internal/storage"
+	"errors"
 	"os"
 	"testing"
+
+	"github.com/google/uuid"
 )
 
 func TextAddTask(t *testing.T) {
@@ -44,4 +48,31 @@ func TestListTasks(t *testing.T) {
 	}
 
 	os.Remove("tasks.json")
+}
+
+func (tl *TaskList) TestCompleteTask(id uuid.UUID) error {
+	tasks, err := storage.LoadTasks()
+	if err != nil {
+		return nil
+	}
+
+	tasklist := TaskList{Tasks: model.List{}}
+	taskDescription := "testing task"
+
+	tasklist.AddTask(taskDescription)
+
+	found := false
+	for i, task := range tasks {
+		if task.ID == id {
+			tasks = append(tasks[:i], tasks[i+1:]...)
+			found = true
+			task.Completed = true
+			break
+		}
+	}
+	if !found {
+		return errors.New("Task not found")
+	}
+
+	return nil
 }
