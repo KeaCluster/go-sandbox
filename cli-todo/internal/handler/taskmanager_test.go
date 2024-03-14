@@ -3,7 +3,6 @@ package handler
 import (
 	"cli-todo/internal/model"
 	"cli-todo/internal/storage"
-	"errors"
 	"os"
 	"testing"
 )
@@ -26,8 +25,6 @@ func TestAddTask(t *testing.T) {
 	if desc != taskDescription {
 		t.Errorf("Expected task description: \n %q \n got %q", taskDescription, desc)
 	}
-
-	os.Remove("tasks.json")
 }
 
 func TestListTasks(t *testing.T) {
@@ -46,11 +43,9 @@ func TestListTasks(t *testing.T) {
 	if len(tasks) != 1 {
 		t.Errorf("Expected at least 1 task, got %d", len(tasks))
 	}
-
-	os.Remove("tasks.json")
 }
 
-func TestCompleteTask(t *testing.T) error {
+func TestCompleteTask(t *testing.T) {
 	defer os.Remove("tasks.json")
 
 	tasklist := TaskList{Tasks: model.List{}}
@@ -81,8 +76,6 @@ func TestCompleteTask(t *testing.T) error {
 		}
 	}
 	if !found {
-		return errors.New("Task not found")
+		t.Errorf("Task was not found")
 	}
-
-	return nil
 }
