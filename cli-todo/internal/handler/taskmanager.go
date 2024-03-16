@@ -34,14 +34,18 @@ func (tl *TaskList) AddTask(description string) error {
 }
 
 func ListTasks() ([]model.Task, error) {
-	tasks, err := storage.LoadTasks()
-	if err != nil {
-		return nil, err
-	}
-	return tasks, nil
+	return storage.LoadTasks()
 }
 
 func (tl *TaskList) CompleteTask(id uuid.UUID) error {
+	return tl.updateTaskStatus(id, true)
+}
+
+func (tl *TaskList) DeleteTask(id uuid.UUID) error {
+	return tl.removeTask(id)
+}
+
+func (tl *TaskList) updateTaskStatus(id uuid.UUID, completed bool) error {
 	tasks, err := storage.LoadTasks()
 	if err != nil {
 		return errors.New("Failed to load tasks: %v" + err.Error())
@@ -65,9 +69,9 @@ func (tl *TaskList) CompleteTask(id uuid.UUID) error {
 		return errors.New("Failed to load tasks: %v" + err.Error())
 	}
 	return nil
-}
 
-func (tl *TaskList) DeleteTask(id uuid.UUID) error {
+}
+func (tl *TaskList) removeTask(id uuid.UUID) error {
 	tasks, err := storage.LoadTasks()
 	if err != nil {
 		return errors.New("Failed to load tasks: %v" + err.Error())
