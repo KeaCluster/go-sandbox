@@ -8,7 +8,11 @@ Small cli app to manage todo-tasks
 
 - golang
 
-I dunno the command yet
+#### Tests
+
+Run tests with `go test ./... -v`
+
+_Should_ run any `*_test.go` file inside the project's dir.
 
 ### Code
 
@@ -34,6 +38,6 @@ I dunno the command yet
 
 ### Todo
 
-- [] Refactor functions
+- [x] Refactor functions
 - [] Clean code reusable
-- [] Functional question mark
+- [x] Functional question mark

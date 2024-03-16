@@ -3,7 +3,6 @@ package handler
 import (
 	"cli-todo/internal/model"
 	"cli-todo/internal/storage"
-	"errors"
 	"fmt"
 	"time"
 
