@@ -4,6 +4,7 @@ import (
 	"cli-todo/internal/model"
 	"cli-todo/internal/storage"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -22,13 +23,12 @@ func (tl *TaskList) AddTask(description string) error {
 	}
 
 	if err := newTask.Validate(); err != nil {
-		return errors.New("Failed to sake task: " + err.Error())
+		return fmt.Errorf("Failed to sake task: %v", err)
 	}
 
 	tl.Tasks = append(tl.Tasks, newTask)
-
 	if err := storage.SaveTasks(tl.Tasks); err != nil {
-		return errors.New("Failed to save task: %v" + err.Error())
+		return fmt.Errorf("Failed to save task: %v", err)
 	}
 	return nil
 }
