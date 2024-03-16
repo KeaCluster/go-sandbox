@@ -48,29 +48,28 @@ func (tl *TaskList) DeleteTask(id uuid.UUID) error {
 func (tl *TaskList) updateTaskStatus(id uuid.UUID, completed bool) error {
 	tasks, err := storage.LoadTasks()
 	if err != nil {
-		return errors.New("Failed to load tasks: %v" + err.Error())
+		return fmt.Errorf("Failed to load tasks: %v", err)
 	}
 
-	found := false
+	updated := false
 	for i, task := range tasks {
 		if task.ID == id {
-			tasks[i].Completed = true
-			found = true
+			tasks[i].Completed = completed
+			updated = true
 			break
 		}
 	}
 
-	if !found {
-		return errors.New("Task not found")
+	if !updated {
+		return fmt.Errorf("Task not found")
 	}
 
-	err = storage.SaveTasks(tasks)
-	if err != nil {
-		return errors.New("Failed to load tasks: %v" + err.Error())
+	if err := storage.SaveTasks(tasks); err != nil {
+		return fmt.Errorf("Failed to load tasks: %v", err)
 	}
 	return nil
-
 }
+
 func (tl *TaskList) removeTask(id uuid.UUID) error {
 	tasks, err := storage.LoadTasks()
 	if err != nil {
