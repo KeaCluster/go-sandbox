@@ -8,6 +8,18 @@ Small cli app to manage todo-tasks
 
 - golang
 
+build then run?
+
+```sh
+go build -o cli-todo
+```
+
+then run
+
+```sh
+./cli-todo add "Finish a project for once"
+```
+
 #### Tests
 
 Run tests with `go test ./... -v`

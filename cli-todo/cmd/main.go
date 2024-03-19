@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"cli-todo/internal/handler"
 	"fmt"
 	"os"
 
@@ -13,26 +12,21 @@ var rootCmd = &cobra.Command{
 	Short: "CLI Todo is a simple task manager (test)",
 }
 
-func main() {
-	taskList := &handler.TaskList{}
+var addCmd = &cobra.Command{
+	Use:   "add [description]",
+	Short: "Add a new task",
+	Long:  "Add a new task to you task list inside /tasks.json",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Added task: ", args[0])
+	},
+}
 
-	var addCmd = &cobra.Command{
-		Use:   "add [description]",
-		Short: "Add a new task",
-		Args:  cobra.MinimumNArgs(1),
-		Run: func(cmd *cobra.Command, args []string) {
-			description := args[0]
-			err := taskList.AddTask(description)
-			if err != nil {
-				fmt.Printf("Error adding task %s", err)
-				os.Exit(1)
-			}
-			fmt.Println("Task added successfully")
-		},
-	}
-
+func init() {
 	rootCmd.AddCommand(addCmd)
+}
 
+func main() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
