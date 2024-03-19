@@ -46,6 +46,20 @@ func (tl *TaskList) DeleteTask(id uuid.UUID) error {
 	return tl.removeTask(id)
 }
 
+func (tl *TaskList) showTasks() error {
+  tasks, err := storage.LoadTasks()
+  if err != nil {
+		return fmt.Errorf("Failed to load tasks: %v", err)
+  }
+  fmt.Println("Pending tasks:")
+
+  for _, task := range tasks {
+    fmt.Printf("ID: %s, DESCRIPTION: %s,\nCREATED: %s", task.ID, task.Description, task.CreatedAt)
+  }
+
+  return nil
+}
+
 func (tl *TaskList) updateTaskStatus(id uuid.UUID, completed bool) error {
 	tasks, err := storage.LoadTasks()
 	if err != nil {
