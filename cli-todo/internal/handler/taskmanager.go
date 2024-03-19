@@ -29,6 +29,8 @@ func (tl *TaskList) AddTask(description string) error {
 	if err := storage.SaveTasks(tl.Tasks); err != nil {
 		return fmt.Errorf("Failed to save task: %v", err)
 	}
+	// There's a reason for %s and %v and i'm not sure this works lmao
+	fmt.Printf("Task created: %s - %v\n", newTask.ID, newTask.Description)
 	return nil
 }
 
@@ -66,6 +68,7 @@ func (tl *TaskList) updateTaskStatus(id uuid.UUID, completed bool) error {
 	if err := storage.SaveTasks(tasks); err != nil {
 		return fmt.Errorf("Failed to load tasks: %v", err)
 	}
+	fmt.Printf("Task completed: %s\n", id)
 	return nil
 }
 
@@ -84,5 +87,6 @@ func (tl *TaskList) removeTask(id uuid.UUID) error {
 			return nil
 		}
 	}
-	return fmt.Errorf("Task not found")
+	fmt.Printf("Task deleted: %s\n", id)
+	return nil
 }
