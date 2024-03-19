@@ -15,6 +15,9 @@ Testing an http web server that can serve static files and dynamic routes
 
 Todo task manager using the CLI
 
+Just run the tests
+Files are stored inside `/tasks.json`
+
 ## Concurrent Web Scraper
 
 Tool that takes a list of URLs and scrapes them concurrently

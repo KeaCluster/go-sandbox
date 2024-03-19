@@ -31,13 +31,13 @@ _Should_ run any `*_test.go` file inside the project's dir.
   - Returns a list of tasks if they exist
 - `CompleteTask()`
   - Marks the task as completed
-  - [] Setup to return the completed task
 - `DeleteTask()`
+  - Returns the completed task
   - Deletes the task from the file
-  - [] Setup to return a message of the output
+  - Returns the output
 
 ### Todo
 
 - [x] Refactor functions
-- [] Clean code reusable
+- [ ] Clean code reusable
 - [x] Functional question mark
