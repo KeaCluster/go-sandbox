@@ -22,6 +22,8 @@ or also
 
 ```sh
 go run main.go
+# OR
+go run .
 ```
 
 ### Code
