@@ -4,8 +4,8 @@ import "fmt"
 
 func main() {
 	urlList := []string{
-		"www.wikileaks.org",
-		"www.wikipedia.org",
+		"https://www.wikileaks.org",
+		"https://www.wikipedia.org",
 	}
 
 	workers := 5
@@ -28,5 +28,12 @@ func main() {
 		} else {
 			fmt.Printf("Scraped %s: %s\n", result.Url, result.Title)
 		}
+	}
+}
+
+func worker(urls <-chan string, results chan<- ScrapingRes) {
+	for url := range urls {
+		title, err := scrape(url)
+		results <- ScrapingRes{Url: url, Title: title, Err: err}
 	}
 }
