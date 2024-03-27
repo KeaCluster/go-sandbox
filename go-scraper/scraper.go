@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"io"
 	"net/http"
 	"strings"
 
@@ -18,40 +18,48 @@ func worker(urls <-chan string, results chan<- ScrapingRes) {
 func scrape(url string) (string, error) {
 	res, err := http.Get(url)
 	if err != nil {
-		return "", fmt.Errorf("Error scraping %s: %v", url, err)
+		return "", err
 	}
 	defer res.Body.Close()
 
 	// 200?
 	if res.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("Unexpected status code %d for %s", res.StatusCode, url)
+		return "", err
 	}
 
 	// Parse
-	doc, err := html.Parse(res.Body)
+	title, err := extractTitle(res.Body)
 	if err != nil {
-		return "", fmt.Errorf("Error parsing HTML for %s: %v", url, err)
+		return "", err
+	}
+	return title, nil
+}
+
+func extractTitle(body io.Reader) (string, error) {
+	doc, err := html.Parse(body)
+	if err != nil {
+		return "", err
 	}
 
 	// Get title
-	var title string
-	var f func(*html.Node)
-	f = func(n *html.Node) {
-		if n.Type == html.ElementNode && n.Data == "title" {
-			if n.FirstChild != nil {
-				title = n.FirstChild.Data
-			}
+	var f func(*html.Node) string
+	f = func(n *html.Node) string {
+		if n.Type == html.ElementNode && n.Data == "title" && n.FirstChild != nil {
+			return n.FirstChild.Data
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			f(c)
+			result := f(c)
+			if result != "" {
+				return result
+			}
 		}
+		return ""
 	}
-	f(doc)
-
+	title := f(doc)
 	// found
-	if title != "" {
-		return strings.TrimSpace(title), nil
+	if title == "" {
+		return "", err
 	}
 
-	return "", fmt.Errorf("No title found for %s, ", url)
+	return strings.TrimSpace(title), nil
 }
