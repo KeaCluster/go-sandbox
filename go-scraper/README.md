@@ -12,8 +12,18 @@ web-scraper for web urls
 
 ### How
 
-- I dunno yet
+```sh
+go build
+
+./go-scraper || go-scraper.exe
+```
+
+or also
+
+```sh
+go run main.go
+```
 
 ### Code
 
-- I will write it
+- It is written
