@@ -8,23 +8,7 @@ Small cli app to manage todo-tasks
 
 - golang
 
-build then run?
-
-```sh
-go build -o cli-todo
-```
-
-then run
-
-```sh
-./cli-todo add "Finish a project for once"
-```
-
-#### Tests
-
-Run tests with `go test ./... -v`
-
-_Should_ run any `*_test.go` file inside the project's dir.
+I dunno the command yet
 
 ### Code
 
@@ -33,25 +17,25 @@ _Should_ run any `*_test.go` file inside the project's dir.
 - Task.go
   - The model
 - storage
-  - Manages the storage inside `/tasks.json`
+  ./cli-todo add ""
 
 ### Functions
 
 - `AddTask()`
   - Adds a task into a `tasks.json` file
-    - Validation
-    - stuff
-- `showTasks()`
+- `ListTasks()`
   - Returns a list of tasks if they exist
 - `CompleteTask()`
   - Marks the task as completed
-  - It doesn't delete it so far after completion
+  - [] Setup to return the completed task
 - `DeleteTask()`
-  - Returns the completed task
   - Deletes the task from the file
-  - Returns the result
+  - [] Setup to return a message of the output
 
 ### Todo
 
-- [x] Refactor functions
-- [x] Functional question mark
+jskdfalskjfeasuy
+
+- [] Refactor functions
+- [] Clean code reusable
+- [] Functional question mark
