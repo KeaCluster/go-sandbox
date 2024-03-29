@@ -1,15 +1,19 @@
 package main
 
 import (
+	"context"
+	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 func main() {
-	r := mux.NewRouter()
+	var err error
+	client, err = ConnectToDB("connection_here")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(context.Background())
 
-	r.HandleFunc("/api/books", getBooks).Methods("GET")
-
+	r := router.NewRouter()
 	http.ListenAndServe(":8000", r)
 }
