@@ -1,3 +1,16 @@
-This is where my code would go
+# Chat RT
 
-If I had any
+So this is a terminal-based application or at least it should be
+
+## About
+
+- Read prev
+- Client-server Architecture
+
+### More
+
+Nothing
+
+## Off
+
+Work
