@@ -1,10 +1,10 @@
-package chat
+package main
 
 import (
-  "flag"
-  "fmt"
+	"flag"
+	"fmt"
 
-  "github.com/keacluster/go-sandbox/chat-rt/internal/chat"
+	"github.com/keacluster/go-sandbox/chat-rt/internal/chat"
 )
 
 func main() {

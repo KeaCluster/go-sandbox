@@ -7,10 +7,23 @@ So this is a terminal-based application or at least it should be
 - Read prev
 - Client-server Architecture
 
-### More
+## How
 
-Nothing
+- **Run the server**: go to `cmd/server` and run:
+
+```bash
+go run main.go
+```
+
+- **Run the client**: go to `cmd/client` and run:
+
+```bash
+go run main.go
+```
 
 ## Off
 
-Work
+- Auth
+- Persistence
+- Err handlers
+- Shutdown and client disconnect
